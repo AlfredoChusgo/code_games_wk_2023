@@ -1,0 +1,25 @@
+{
+  "name": "code_comandos_wk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlfredoChusgo/code_games_wk_2023.git"
+  },
+  "author": "code_comandos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlfredoChusgo/code_games_wk_2023/issues"
+  },
+  "homepage": "https://github.com/AlfredoChusgo/code_games_wk_2023#readme",
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
+    "devextreme": "22.2.6",
+    "jquery": "^3.6.4"
+  }
+}
