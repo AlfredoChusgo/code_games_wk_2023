@@ -4,3 +4,26 @@
     top: 6px;
   }
    */
+
+   .chat-container {
+    height: 600px; /* Set the height to your preferred value */
+    overflow: auto; /* Enable scrolling */
+  }
+
+
+  .chat-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .chat-message.sent {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .chat-message.received {
+
+    background-color: #009407;
+    background-color: #f2f2f2;
+  }

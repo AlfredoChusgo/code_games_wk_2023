@@ -77,3 +77,60 @@ $('#dataSourceList').dxSelectBox({
   
   let collapsed = false;
   
+
+
+  const popupOptions = {
+    width: 660,
+    height: 540,
+    contentTemplate() {
+      const result = $(_.template($('#property-details').html())(currentHouse));
+      const button = result.find('#favorites')
+        .dxButton(buttonOptions)
+        .dxButton('instance');
+      setButtonText(button, currentHouse.Favorite);
+      return result;
+    },
+    showTitle: true,
+    visible: false,
+    dragEnabled: false,
+    hideOnOutsideClick: true,
+  };
+
+
+
+  function addMessage(item){
+    const chatMessages = document.getElementById('chat-messages');
+    const chatMessage = document.createElement('div');
+    chatMessage.classList.add('chat-message');
+    
+    // Set the appropriate class based on the role of the sender
+    if (item.role === 'sender') {
+      chatMessage.classList.add('sent');
+    } else {
+      chatMessage.classList.add('received');
+    }
+    
+    chatMessage.innerHTML = `
+      <div class="message-header">${item.author}</div>
+      <div class="message-body">${item.message}</div>
+      <div class="message-timestamp">${item.timestamp}</div>
+    `;
+    chatMessages.appendChild(chatMessage);
+
+  }
+
+
+  // Get the button element
+const sendButton = document.getElementById("sendBtn");
+
+// Define the click event handler function
+function handleClick(event) {
+    
+    event.preventDefault();
+    const messageBox = document.getElementById('messageBox');
+    addMessage({author:"chatGPT",message:messageBox.value,timestamp : Date.now()});
+    messageBox.value = "";
+}
+
+// Bind the click event to the button
+sendButton.addEventListener("click", handleClick);
