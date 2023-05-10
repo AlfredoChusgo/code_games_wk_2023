@@ -34,7 +34,7 @@ namespace CC.WebAPI.ChatGPT.Controllers
             // Add user messages.
             //{ "role":"user", "content": "How much the cost of all laptops?"}
            
-            _gptService.PreviousMessages = LoadChatMessagesFromJson(userMessage); ;
+            _gptService.PreviousMessages = LoadChatMessagesFromJson(userMessage);
 
             //_gptService.PreviousMessages.Add(_gptService.GetUserMessage(userMessage));
 
