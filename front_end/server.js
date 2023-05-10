@@ -2,17 +2,21 @@ import { Configuration, OpenAIApi } from "openai";
 import  express from "express";
 import bodyParser from "body-parser";
 import cors from "cors" ;
+import 'dotenv/config';
+
+const port =  process.env.PORT;
+const apiKey = process.env.API_KEY;
+const organizationId = process.env.ORGANIZATION_ID;
 
 const configuration = new Configuration({
-    organization: "",
-    apiKey: ""
+    organization: organizationId,
+    apiKey: apiKey
 });
 
 const openai = new OpenAIApi(configuration);
 
 
 const app = express();
-const port =  3000;
 
 
 
