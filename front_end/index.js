@@ -1,17 +1,16 @@
 import { columns1, data1 } from './data_source/us_investor_flow_of_funds_into_investment_classes';
 import {columns2,data2} from './data_source/world_happines';
 import {columns3,data3} from './data_source/risk_control_matrix';
+import {columns4,data4} from './data_source/products';
 
-const dataSourcesList = [{id:1,name:"US Investor Flow of Funds into Investment Classes"}, {id:2,name:"World Happines"}, {id:3,name:"Risk Control Matrix"}, {id:4,name:"TestData4"}];
+const dataSourcesList = [{id:1,name:"US Investor Flow of Funds into Investment Classes"}, {id:2,name:"World Happines"}, {id:3,name:"Risk Control Matrix"}, {id:4,name:"Products"}];
 window.messages = [];
 $('#dataSourceList').dxSelectBox({
     dataSource: dataSourcesList,
     value: dataSourcesList[0],
     valueExpr: "id",
     displayExpr: "name",
-    onValueChanged(data) {
-      //if (data.value === 'All') { dataGrid.clearFilter(); } else { dataGrid.filter(['Task_Status', '=', data.value]); }
-      console.log(data);
+    onValueChanged(data) {            
       let columns = null ;
       let dataSource = null;
       switch (data.value) {
@@ -28,7 +27,8 @@ $('#dataSourceList').dxSelectBox({
             dataSource = data3;
           break;
         case 4:
-          day = "Thursday";
+            columns = columns4;
+            dataSource = data4;
           break;
         case 5:
           day = "Friday";
@@ -41,6 +41,7 @@ $('#dataSourceList').dxSelectBox({
         dataSource: dataSource,
         columns: columns
       });
+      updateHtmlMessages();
     },
   });
 
@@ -125,14 +126,16 @@ $('#dataSourceList').dxSelectBox({
     })
     .then(res=> res.json())
     .then(data=>{
+      loadPanel.hide();
       let newAsistantMessage = {"role":"assistant","content":`${data.completion.content}`}
       messages.push(newAsistantMessage);
       updateHtmlMessages();
-      loadPanel.hide();
     })
   }
 
   function updateHtmlMessages(){
+    const chatMessages = document.getElementById('chat-messages');
+    chatMessages.innerHTML = '';
     const copyMessages = [...messages];
     copyMessages.shift();
     copyMessages.forEach(e=>{

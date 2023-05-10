@@ -3,7 +3,10 @@ import  express from "express";
 import bodyParser from "body-parser";
 import cors from "cors" ;
 
-
+const configuration = new Configuration({
+    organization: "",
+    apiKey: ""
+});
 
 const openai = new OpenAIApi(configuration);
 
@@ -36,5 +39,5 @@ app.post("/", async (req,res)=>{
 });
 
 app.listen(port,()=>{
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Example app listening at port: ${port}`);
 });
