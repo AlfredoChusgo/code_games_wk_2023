@@ -5,7 +5,7 @@
   }
    */
 
-   .chat-container .chat-messages {
+   .chat-container {
     height: 600px; /* Set the height to your preferred value */
     overflow: auto; /* Enable scrolling */
   }

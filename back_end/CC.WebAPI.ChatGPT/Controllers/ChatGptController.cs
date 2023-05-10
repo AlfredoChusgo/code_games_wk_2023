@@ -1,6 +1,7 @@
 ﻿using CC.WebAPI.ChatGPT.BussinessLogic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels;
@@ -30,8 +31,12 @@ namespace CC.WebAPI.ChatGPT.Controllers
         {
             string finalMessage = string.Empty;
 
-            // Create a chat completion request
-            _gptService.ReportDatasource = userMessage;
+            // Add user messages.
+            //{ "role":"user", "content": "How much the cost of all laptops?"}
+           
+            _gptService.PreviousMessages = LoadChatMessagesFromJson(userMessage);
+
+            //_gptService.PreviousMessages.Add(_gptService.GetUserMessage(userMessage));
 
             var completionResult = await _gptService.GetCompletion(userMessage);
 
@@ -41,6 +46,7 @@ namespace CC.WebAPI.ChatGPT.Controllers
                 foreach (var choice in completionResult.Choices)
                 {
                     //Console.WriteLine(choice.Message.Content);
+                    _gptService.PreviousMessages.Add(_gptService.GetAssistantMessage(choice.Message.Content)); 
                     finalMessage += choice.Message.Content;
                 }
             }
@@ -57,6 +63,11 @@ namespace CC.WebAPI.ChatGPT.Controllers
             ob.Add("chatgpt_message", finalMessage);
 
             return   ob.ToJsonString();
+        }
+
+        private List<ChatMessage> LoadChatMessagesFromJson(string userMessage)
+        {
+            return JsonConvert.DeserializeObject<List<ChatMessage>>(userMessage);
         }
     }
 }
