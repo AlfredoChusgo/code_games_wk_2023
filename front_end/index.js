@@ -95,6 +95,14 @@ $('#dataSourceList').dxSelectBox({
 
   let collapsed = false;
   
+  const sendButton = document.getElementById("sendBtn");
+  const messageBox = document.getElementById('messageBox');
+  messageBox.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent form submission if needed
+      sendButton.click(); // Programmatically click the button
+    }
+  });
   //chat section 
   
   function addDataSourceToMessages(dataSource){
@@ -157,7 +165,7 @@ $('#dataSourceList').dxSelectBox({
 
 
   // Get the button element
-const sendButton = document.getElementById("sendBtn");
+//const sendButton = document.getElementById("sendBtn");
 
 // Define the click event handler function
 function handleClick(event) {
