@@ -3,7 +3,7 @@ import {columns2,data2} from './data_source/world_happines';
 import {columns3,data3} from './data_source/risk_control_matrix';
 
 const dataSourcesList = [{id:1,name:"US Investor Flow of Funds into Investment Classes"}, {id:2,name:"World Happines"}, {id:3,name:"Risk Control Matrix"}, {id:4,name:"TestData4"}];
-
+window.messages = [];
 $('#dataSourceList').dxSelectBox({
     dataSource: dataSourcesList,
     value: dataSourcesList[0],
@@ -17,7 +17,7 @@ $('#dataSourceList').dxSelectBox({
       switch (data.value) {
         case 1:
           columns = columns1;
-          dataSource = data1;
+          dataSource = data1;          
           break;
         case 2:
             columns = columns2;
@@ -36,6 +36,7 @@ $('#dataSourceList').dxSelectBox({
         case 6:
           day = "Saturday";
       }
+      addDataSourceToMessages(dataSource);
       grid.option({
         dataSource: dataSource,
         columns: columns
@@ -74,15 +75,39 @@ $('#dataSourceList').dxSelectBox({
   }).dxDataGrid('instance');
 
   
+  window.loadPanel = $('.loadpanel').dxLoadPanel({
+    shadingColor: 'rgba(0,0,0,0.4)',
+    position: { of: '#chat-messages' },
+    visible: false,
+    showIndicator: true,
+    showPane: true,
+    shading: true,
+    hideOnOutsideClick: false,
+    onShown() {
+      // setTimeout(() => {
+      //   loadPanel.hide();
+      // }, 3000);
+    },
+    onHidden() {
+      
+    },
+  }).dxLoadPanel('instance');
+
   let collapsed = false;
   
   //chat section 
-  window.messages = [];
+  
+  function addDataSourceToMessages(dataSource){
+     const message = {role:'user',content:`data: ${JSON.stringify(dataSource)}`};
+     messages = [message];
+  }
+
 
   function addMessageToArray(messageText){
     const newMessage = {"role":"user","content":`${messageText}`};
     messages.push(newMessage);
 
+    loadPanel.show();
     fetch('http://localhost:3000',{
       method: 'POST',
       headers:{
@@ -95,16 +120,19 @@ $('#dataSourceList').dxSelectBox({
       let newAsistantMessage = {"role":"assistant","content":`${data.completion.content}`}
       messages.push(newAsistantMessage);
       updateHtmlMessages();
+      loadPanel.hide();
     })
   }
 
   function updateHtmlMessages(){
-    messages.forEach(e=>{
+    const copyMessages = [...messages];
+    copyMessages.shift();
+    copyMessages.forEach(e=>{
       addMessage(e);
     });
     
   }
-  function addMessage(item){
+  function addMessage(item){ 
     const chatMessages = document.getElementById('chat-messages');
     const chatMessage = document.createElement('div');
     chatMessage.classList.add('chat-message');

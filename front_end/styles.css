@@ -18,12 +18,11 @@
   }
   
   .chat-message.sent {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f2f2f2;
+    color: #000000;
   }
   
   .chat-message.received {
-
-    background-color: #009407;
-    background-color: #f2f2f2;
+    background-color: #007bff;
+    color: #ffffff;
   }

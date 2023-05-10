@@ -5,7 +5,7 @@ import cors from "cors" ;
 
 const configuration = new Configuration({
     organization: "org-1JQJRSkh0z2nPDbR0bIWBr4r",
-    apiKey: "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"
+    apiKey: "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"
 });
 
 const openai = new OpenAIApi(configuration);
@@ -20,15 +20,22 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/", async (req,res)=>{
-    const {messages}  = req.body;
-    const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-            { role: "system", content: "you are helpful assitant in data analysts" },
-        ...messages],
-    });
+    try {
+        const { messages } = req.body;
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [
+                { role: "system", content: "you are helpful assitant in data analysts" },
+                ...messages],
+        });
 
     res.json({completion: completion.data.choices[0].message});
+        // Code that may throw an exception
+      } catch (error) {
+        // Code to handle the exception
+        res.json({error: JSON.stringify(error)});
+      }
+      
 });
 
 app.listen(port,()=>{
