@@ -50,11 +50,11 @@ $('#dataSourceList').dxSelectBox({
     dataSource: data1,
     columns:columns1,
     paging: {
-      pageSize: 10,
+      pageSize: 20,
     },
     pager: {
       showPageSizeSelector: true,
-      allowedPageSizes: [10, 25, 50, 100],
+      allowedPageSizes: [10, 20, 50, 100],
     },
     remoteOperations: false,
     searchPanel: {

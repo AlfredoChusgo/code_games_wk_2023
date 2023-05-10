@@ -29,7 +29,7 @@ app.post("/", async (req,res)=>{
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [
-                { role: "system", content: "you are a useful assistant in data analysis with no programming experience" },
+                { role: "system", content: "you are a useful assistant in data analysis no coding experience" },
                 ...messages],
         });
 
