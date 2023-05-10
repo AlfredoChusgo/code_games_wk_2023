@@ -2,6 +2,7 @@ import { columns1, data1 } from './data_source/us_investor_flow_of_funds_into_in
 import {columns2,data2} from './data_source/world_happines';
 import {columns3,data3} from './data_source/risk_control_matrix';
 import {columns4,data4} from './data_source/products';
+import config from './config.js';
 
 const dataSourcesList = [{id:1,name:"US Investor Flow of Funds into Investment Classes"}, {id:2,name:"World Happines"}, {id:3,name:"Risk Control Matrix"}, {id:4,name:"Products"}];
 window.messages = [];
@@ -117,7 +118,7 @@ $('#dataSourceList').dxSelectBox({
     messages.push(newMessage);
 
     loadPanel.show();
-    fetch('http://localhost:3000',{
+    fetch(config.apiUrl,{
       method: 'POST',
       headers:{
         'Content-Type' : 'application/json'
