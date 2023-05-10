@@ -1,4 +1,3 @@
-
 import { columns1, data1 } from './data_source/us_investor_flow_of_funds_into_investment_classes';
 import {columns2,data2} from './data_source/world_happines';
 import {columns3,data3} from './data_source/risk_control_matrix';
@@ -104,6 +103,9 @@ $('#dataSourceList').dxSelectBox({
   }
 
 
+  function addMessageToArray(messageText){
+    const newMessage = {"role":"user","content":`${messageText}`};
+    messages.push(newMessage);
 
     loadPanel.show();
     fetch('http://localhost:3000',{
@@ -136,19 +138,21 @@ $('#dataSourceList').dxSelectBox({
     chatMessage.classList.add('chat-message');
     
     // Set the appropriate class based on the role of the sender
-    if (item.role === 'sender') {
+    if (item.role === 'user') {
       chatMessage.classList.add('sent');
     } else {
       chatMessage.classList.add('received');
     }
     
     chatMessage.innerHTML = `
-      <div class="message-header">${item.author}</div>
-      <div class="message-body">${item.message}</div>
-      <div class="message-timestamp">${item.timestamp}</div>
+      <div class="message-header">${item.role}</div>
+      <div class="message-body">${item.content}</div>      
     `;
     chatMessages.appendChild(chatMessage);
 
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    
   }
 
 
@@ -160,9 +164,13 @@ function handleClick(event) {
     
     event.preventDefault();
     const messageBox = document.getElementById('messageBox');
-    addMessage({author:"chatGPT",message:messageBox.value,timestamp : Date.now()});
+    //addMessage({role:"chatGPT",message:messageBox.value});
+
+    addMessageToArray(messageBox.value);
     messageBox.value = "";
+    messageBox.focus();
 }
 
 // Bind the click event to the button
 sendButton.addEventListener("click", handleClick);
+

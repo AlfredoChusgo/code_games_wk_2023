@@ -3,10 +3,7 @@ import  express from "express";
 import bodyParser from "body-parser";
 import cors from "cors" ;
 
-const configuration = new Configuration({
-    organization: "org-1JQJRSkh0z2nPDbR0bIWBr4r",
-    apiKey: "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"
-});
+
 
 const openai = new OpenAIApi(configuration);
 
