@@ -8,7 +8,7 @@ namespace CC.WebAPI.ChatGPT.BussinessLogic
 {
     public class GptService
     {
-        const string API_KEY = "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";
+        const string API_KEY = "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";
 
         OpenAIService gpt3;
 
